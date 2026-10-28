@@ -9,7 +9,9 @@ import java.util.Random;
 */
 
 class Randomness {
-  
+  private Randomness() {
+    // private constructor to prevent instantiation
+  }
   private static Random random = new Random();
 
   public static double nextDouble() {
