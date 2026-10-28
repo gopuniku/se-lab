@@ -7,6 +7,18 @@ import java.util.Random;
 *
 * (Deliberately contains bugs.)
 */
+
+class Randomness {
+  private Randomness() {
+    // private constructor to prevent instantiation
+  }
+  private static Random random = new Random();
+
+  public static double nextDouble() {
+    return random.nextDouble();
+  }
+}
+
 public class TorpedoStore {
 
   // rate of failing to fire torpedos [0.0, 1.0]
@@ -30,18 +42,17 @@ public class TorpedoStore {
 
   public boolean fire(int numberOfTorpedos){
     if(numberOfTorpedos < 1 || numberOfTorpedos > this.torpedoCount){
-      new IllegalArgumentException("numberOfTorpedos");
+      throw new IllegalArgumentException("numberOfTorpedos must be a positive integer");
     }
 
     boolean success = false;
 
     // simulate random overheating of the launcher bay which prevents firing
-    Random generator = new Random();
-    double r = generator.nextDouble();
+    double r = Randomness.nextDouble();
 
     if (r >= FAILURE_RATE) {
       // successful firing
-      this.torpedoCount =- numberOfTorpedos;
+      this.torpedoCount -= numberOfTorpedos;
       success = true;
     } else {
       // simulated failure
